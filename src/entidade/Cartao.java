@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 1° passo criar essa classe
  */
 package entidade;
 
@@ -22,17 +20,19 @@ import javax.persistence.Table;
 public class Cartao implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    
+    @Id  //primary key no BD
+    @GeneratedValue(strategy = GenerationType.IDENTITY) //Auto_increment no mysql
     private Long id;
-    @Column(nullable = false, length = 19)
+    
+    @Column(nullable = false, length = 19) //
     private String numero;
     @Column(nullable = false, length = 20)
     private String bandeira;
-    @Column(nullable = false, length = 05)
+    @Column(nullable = false, length = 05) //validade com formato de 5 digitos ex:02/21
     private String validade;
 
-    public Cartao() {
+    public Cartao() {  //construtor padrao
     }
 
     public Cartao(Long id, String numero, String bandeira, String validade) {

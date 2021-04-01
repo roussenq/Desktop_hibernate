@@ -18,7 +18,7 @@ import static org.junit.Assert.*;
  * @author David
  */
 public class CartaoDaoImplTest {
-    
+    //variaveis globais que irão ser utilizadas em toda classe para teste
     private Session sessao;
     private CartaoDao cartaoDao;
     private Cartao cartao;
@@ -26,7 +26,6 @@ public class CartaoDaoImplTest {
     public CartaoDaoImplTest() {
         cartaoDao = new CartaoDaoImpl();
     }
-
     
     @Test
     public void TestSalvarCartao() {
@@ -46,30 +45,72 @@ public class CartaoDaoImplTest {
         assertNotNull(cartao.getId());
     }
     
-    //@Test
+    @Test
     public void TestAlterarCartao() {
         System.out.println("========== Alterar ==========");
+        
         buscaCartaoBd();
+        
+        cartao.setBandeira("Master");
+        cartao.setNumero("1111-2222-3333-4444");
+        cartao.setValidade("07/26");
+        
+        sessao = HibernateUtil.abrirConexao();
+        cartaoDao.salvarOuAlterar(cartao, sessao);
+        
+        Cartao cartaoNovo = cartaoDao.pesquisarPorId(cartao.getId(), sessao);
+        
+        sessao.close();
+        
+        assertEquals(cartaoNovo.getNumero(), cartao.getNumero());
+    }
+    @Test
+    public void testExcluirCartao() {
+        System.out.println("Excluir Cartão");
+        
+        buscaCartaoBd();
+        
+        sessao = HibernateUtil.abrirConexao();
+        cartaoDao.excluir(cartao, sessao);
+        
+        Cartao cartaoExcluido = cartaoDao.pesquisarPorId(cartao.getId(), sessao);
+        
+        sessao.close();
+        
+        assertNull(cartaoExcluido);
     }
     //@Test
     public void testListarTodosCartoes() {
         System.out.println("listarTodos");
     }
 
-    //@Test
+    @Test
     public void testPesquisarCartaoPorId() {
         System.out.println("pesquisarPorId");
+        
+        buscaCartaoBd();
+        
+        sessao = HibernateUtil.abrirConexao();
+        
+        cartao = cartaoDao.pesquisarPorId(cartao.getId(), sessao);
+        sessao.close();
+        
+        assertNotNull(cartao.getId());    
     }
 
     
     public Cartao buscaCartaoBd() {
         sessao = HibernateUtil.abrirConexao();
-        Query consulta = sessao.createQuery("from Cartao"); //hql
+        Query consulta = sessao.createQuery("from Cartao"); //HQL
         List<Cartao> cartoes = consulta.list();
         sessao.close();
-        cartao = cartoes.get(0);
-        System.out.println("================================================");
-        System.out.println("Resultado da busca:" + cartoes.get(0).getNumero());
+        if (cartoes.isEmpty()){
+            TestSalvarCartao();
+        } else {
+            cartao = cartoes.get(0);
+            System.out.println("================================================");
+            System.out.println("Resultado da busca:" + cartoes.get(0).getNumero());
+        }
         return cartao;
     }
     

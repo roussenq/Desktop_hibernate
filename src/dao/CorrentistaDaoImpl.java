@@ -22,7 +22,7 @@ public class CorrentistaDaoImpl extends BaseDaoImpl<Correntista, Long> implement
 
     @Override
     public List<Correntista> pesquisarPorNome(String nome, Session sessao) throws HibernateException {
-        Query consulta = sessao.createQuery("from Correntista where nome like :nomeHql=");
+        Query consulta = sessao.createQuery("from Correntista where nome like :nomeHql");
         consulta.setParameter("nomeHql", "%" + nome + "%");
         return consulta.list();
     }

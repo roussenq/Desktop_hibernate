@@ -16,6 +16,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 
@@ -62,28 +64,55 @@ public class CorrentistaDaoImplTest {
     }
     
     //@Test
+    public void testExcluirCorrentista() {
+        System.out.println("Excluir Correntista");
+        
+        buscaCorrentistaBd();
+        
+        sessao = HibernateUtil.abrirConexao();
+        correntistaDao.excluir(correntista, sessao);
+        
+        Correntista correntistaExcluido = correntistaDao.pesquisarPorId(correntista.getId(), sessao);
+        
+        sessao.close();
+        assertNull(correntistaExcluido);
+    }
+    @Test
     public void testPesquisarPorId() {
         System.out.println("pesquisarPorId");
        
     }
     @Test
-    public void testAlterarCorrentista() {
-        System.out.println("Alterar correntista");
+    public void testPesquisarCorrentistaPorNome() {
+        System.out.println("Correntista pesquisar por Nome");
         buscaCorrentistaBd();
-        correntista.setEmail("david@gmail.com");
-        sessao = HibernateUtil.abrirConexao();
-        correntistaDao.salvarOuAlterar(correntista, sessao);
-        Correntista correntistaNovo = correntistaDao.pesquisarPorId(correntista.getId(), sessao);
         
-        assertEquals(correntista.getNome(), correntistaNovo.getNome());
+        sessao = HibernateUtil.abrirConexao();
+        int tamanho = correntista.getNome().length();
+        String parteDoNome = correntista.getNome().substring(tamanho-5);
+        List<Correntista> correntistas = correntistaDao.pesquisarPorNome(parteDoNome, sessao);
+        
         sessao.close();
-    }
-
-    //@Test
-    public void testPesquisarPorNome() {
-        System.out.println("pesquisarPorNome");    
+        assertTrue(!correntistas.isEmpty());
     }
     
+    @Test
+    public void testAlterarCorrentista() {
+        System.out.println("Alterar correntista");
+        
+        buscaCorrentistaBd();
+        
+        correntista.setEmail("david@gmail.com");
+        
+        sessao = HibernateUtil.abrirConexao();
+        correntistaDao.salvarOuAlterar(correntista, sessao);
+        
+        Correntista correntistaNovo = correntistaDao.pesquisarPorId(correntista.getId(), sessao);
+        
+        sessao.close();
+        assertEquals(correntista.getNome(), correntistaNovo.getNome());
+    }
+
     public Correntista buscaCorrentistaBd() {
         sessao = HibernateUtil.abrirConexao();
         Query consulta = sessao.createQuery("from Correntista");

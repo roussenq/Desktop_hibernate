@@ -1,7 +1,6 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 3° passo criar essa classe impl
+ * 4° passo criar o teste, com botao direito nesta classe, ferramentas, criar teste
  */
 package dao;
 
@@ -11,7 +10,8 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 
-public class CartaoDaoImpl extends BaseDaoImpl<Cartao, Long> implements CartaoDao, Serializable {
+public class CartaoDaoImpl extends BaseDaoImpl<Cartao, Long>
+                                           implements CartaoDao, Serializable {
 
     @Override
     public Cartao pesquisarPorId(Long id, Session sessao) throws HibernateException {

@@ -43,10 +43,10 @@ public class Correntista implements Serializable {
     private String email;
     @Column(nullable = false)
     private BigDecimal salario;
-    @Lob
+    @Lob  //lob usa bigtext no BD, para mais de 255 caracteres
     private String historico;
     
-    @OneToOne
+    @OneToOne //associacao
     @JoinColumn(name = "id_cartao")
     private Cartao cartao;
 
