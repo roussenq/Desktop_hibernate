@@ -11,44 +11,36 @@ import javax.persistence.*;
 
 /**
  *
- * @author David
+ * @author User
  */
 @Entity
-@Table(name = "fornecedor")
-public class Fornecedor implements Serializable {
+@Table(name = "chamado")
+public class Chamado implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(nullable = false, length = 100)
-    private String nome;
-    
     @Temporal(TemporalType.DATE)
-    @Column(nullable = false)
     private Date cadastro;
+    @Column(nullable = false)
+    private String equipamento;
+    @Column(nullable = false)
     @Lob
     private String descricao;
-    
-    public Fornecedor() {
+    private boolean ativo;
+
+    public Chamado() {
     }
 
-    public Fornecedor(Long id, String nome, Date cadastro, String descricao) {
+    public Chamado(Long id, Date cadastro, String equipamento, String descricao, boolean ativo) {
         this.id = id;
-        this.nome = nome;
         this.cadastro = cadastro;
+        this.equipamento = equipamento;
         this.descricao = descricao;
-    }
-  
-    
-    public String getNome() {
-        return nome;
+        this.ativo = ativo;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    
     public Long getId() {
         return id;
     }
@@ -65,12 +57,28 @@ public class Fornecedor implements Serializable {
         this.cadastro = cadastro;
     }
 
+    public String getEquipamento() {
+        return equipamento;
+    }
+
+    public void setEquipamento(String equipamento) {
+        this.equipamento = equipamento;
+    }
+
     public String getDescricao() {
         return descricao;
     }
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
     
     @Override
@@ -83,10 +91,10 @@ public class Fornecedor implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Fornecedor)) {
+        if (!(object instanceof Chamado)) {
             return false;
         }
-        Fornecedor other = (Fornecedor) object;
+        Chamado other = (Chamado) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -95,7 +103,7 @@ public class Fornecedor implements Serializable {
 
     @Override
     public String toString() {
-        return "entidade.Fornecedor[ id=" + id + " ]";
+        return "entidade.Chamado[ id=" + id + " ]";
     }
-    
+
 }

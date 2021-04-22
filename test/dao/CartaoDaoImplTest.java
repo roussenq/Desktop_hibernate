@@ -27,7 +27,7 @@ public class CartaoDaoImplTest {
         cartaoDao = new CartaoDaoImpl();
     }
     
-    @Test
+    //@Test
     public void TestSalvarCartao() {
         System.out.println("salvar cartao");
         cartao = new Cartao(null,
@@ -45,7 +45,7 @@ public class CartaoDaoImplTest {
         assertNotNull(cartao.getId());
     }
     
-    @Test
+    //@Test
     public void TestAlterarCartao() {
         System.out.println("========== Alterar ==========");
         
@@ -64,7 +64,7 @@ public class CartaoDaoImplTest {
         
         assertEquals(cartaoNovo.getNumero(), cartao.getNumero());
     }
-    @Test
+    //@Test
     public void testExcluirCartao() {
         System.out.println("Excluir Cartão");
         
@@ -84,7 +84,7 @@ public class CartaoDaoImplTest {
         System.out.println("listarTodos");
     }
 
-    @Test
+    //@Test
     public void testPesquisarCartaoPorId() {
         System.out.println("pesquisarPorId");
         

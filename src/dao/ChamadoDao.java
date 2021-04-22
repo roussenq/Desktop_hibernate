@@ -5,17 +5,19 @@
  */
 package dao;
 
-import entidade.Correntista;
+import entidade.Chamado;
 import java.util.List;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
 /**
  *
- * @author David
+ * @author User
  */
-public interface CorrentistaDao extends BaseDao<Correntista, Long>{
-    
-    List<Correntista> pesquisarPorNome(String nome, Session sessao) throws HibernateException;
-    
+public interface ChamadoDao extends BaseDao<Chamado, Long> {
+
+    List<Chamado> pesquisarChamadoAberto(Session sessao) throws HibernateException;
+
+    List<Chamado> pesquisarPorEquipamento(String equipamento, Session sessao) throws HibernateException;
+
 }
